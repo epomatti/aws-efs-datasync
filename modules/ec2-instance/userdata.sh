@@ -6,3 +6,5 @@ export NEEDRESTART_MODE=a
 
 sudo apt update
 sudo apt upgrade -y
+
+sudo apt install -y nfs-common

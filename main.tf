@@ -26,4 +26,5 @@ module "ec2-instance" {
 module "efs_unencrypted" {
   source    = "./modules/efs/unencrypted"
   subnet_id = module.vpc.subnet_priv1
+  vpc_id    = module.vpc.vpc_id
 }
