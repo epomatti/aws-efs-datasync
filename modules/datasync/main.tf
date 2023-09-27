@@ -3,6 +3,9 @@ resource "aws_datasync_location_efs" "unencrypted" {
   # You can accomplish the same behavior with depends_on or an aws_efs_mount_target data source reference.
   efs_file_system_arn = var.efs_unencrypted_arn
 
+  subdirectory          = "/"
+  in_transit_encryption = "TLS1_2"
+
   ec2_config {
     security_group_arns = [var.efs_unencrypted_sg_arn]
     subnet_arn          = var.subnet_arn
@@ -26,7 +29,7 @@ resource "aws_datasync_location_efs" "encrypted" {
 resource "aws_datasync_task" "efs_encrypted" {
   name                     = "efs-unencrypted-to-encrypted"
   source_location_arn      = aws_datasync_location_efs.unencrypted.arn
-  destination_location_arn = aws_datasync_location_efs.encrypted.arn
+  destination_location_arn = aws_datasync_location_efs.encrypted.arn  
 
   options {
     bytes_per_second = -1
