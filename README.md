@@ -11,6 +11,8 @@ A few notes about EFS encryption:
 - **Encrypting metadata at rest** - Amazon EFS uses the AWS managed key for Amazon EFS, `aws/elasticfilesystem`, to encrypt and decrypt file system metadata (that is, file names, directory names, and directory contents).
 
 
+EFS infrequent access
+
 ```sh
 terraform init
 terraform apply -auto-approve
