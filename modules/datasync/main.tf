@@ -14,6 +14,7 @@ resource "aws_datasync_location_efs" "encrypted" {
   # You can accomplish the same behavior with depends_on or an aws_efs_mount_target data source reference.
   efs_file_system_arn = var.efs_encrypted_arn
 
+  subdirectory          = "/"
   in_transit_encryption = "TLS1_2"
 
   ec2_config {
