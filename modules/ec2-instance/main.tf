@@ -64,13 +64,14 @@ resource "aws_iam_role" "box" {
   })
 }
 
-data "aws_iam_policy" "AmazonSSMManagedInstanceCore" {
-  arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+resource "aws_iam_role_policy_attachment" "ssm-managed-instance-core" {
+  role       = aws_iam_role.box.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-resource "aws_iam_role_policy_attachment" "box" {
+resource "aws_iam_role_policy_attachment" "ssm_read_only" {
   role       = aws_iam_role.box.name
-  policy_arn = data.aws_iam_policy.AmazonSSMManagedInstanceCore.arn
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess"
 }
 
 data "aws_vpc" "selected" {
