@@ -29,8 +29,13 @@ module "efs_unencrypted" {
   vpc_id    = module.vpc.vpc_id
 }
 
+module "kms" {
+  source = "./modules/kms"
+}
+
 module "efs_encrypted_kms" {
-  source    = "./modules/efs/encrypted"
-  subnet_id = module.vpc.subnet_priv1
-  vpc_id    = module.vpc.vpc_id
+  source     = "./modules/efs/encrypted"
+  subnet_id  = module.vpc.subnet_priv1
+  vpc_id     = module.vpc.vpc_id
+  kms_key_id = module.kms.key_arn
 }

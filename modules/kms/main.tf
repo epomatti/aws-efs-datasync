@@ -7,22 +7,22 @@ locals {
   aws_account_principal = "arn:aws:iam::${local.aws_account_id}:root"
 }
 
-resource "aws_kms_key" "vpce" {
+resource "aws_kms_key" "efs" {
   description             = "EFS CMK"
   deletion_window_in_days = 7
 }
 
-resource "aws_kms_alias" "vpce" {
+resource "aws_kms_alias" "efs" {
   name          = "alias/efs"
-  target_key_id = aws_kms_key.vpce.key_id
+  target_key_id = aws_kms_key.efs.key_id
 }
 
-resource "aws_kms_key_policy" "vpce" {
-  key_id = aws_kms_key.vpce.id
+resource "aws_kms_key_policy" "efs" {
+  key_id = aws_kms_key.efs.id
 
   policy = jsonencode({
     Version = "2012-10-17"
-    Id      = "EvandroCustomVPCEKMS"
+    Id      = "EvandroCustomEFS"
     Statement = [
       {
         Sid    = "Enable IAM User Permissions"
@@ -33,17 +33,17 @@ resource "aws_kms_key_policy" "vpce" {
         Action   = "kms:*"
         Resource = "*"
       },
-      {
-        Sid    = "Allow attachment of persistent resources"
-        Effect = "Allow"
-        Principal = {
-          AWS = "${var.ec2_iam_role_arn}"
-        }
-        Action = [
-          "kms:*"
-        ]
-        Resource = "*"
-      }
+      # {
+      #   Sid    = "Allow attachment of persistent resources"
+      #   Effect = "Allow"
+      #   Principal = {
+      #     AWS = "${var.ec2_iam_role_arn}"
+      #   }
+      #   Action = [
+      #     "kms:*"
+      #   ]
+      #   Resource = "*"
+      # }
     ]
   })
 }
