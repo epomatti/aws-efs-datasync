@@ -37,6 +37,10 @@ sudo chmod go+rw .
 
 ## DataSync
 
+An AWS DataSync task will be created as part of the infrastructure. To trigger it from the CLI:
 
+```sh
+aws datasync start-task-execution --task-arn <arn>
+```
 
 [1]: https://docs.aws.amazon.com/efs/latest/ug/wt1-test.html
