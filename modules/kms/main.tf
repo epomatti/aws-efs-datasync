@@ -8,12 +8,12 @@ locals {
 }
 
 resource "aws_kms_key" "vpce" {
-  description             = "Testing grants"
+  description             = "EFS CMK"
   deletion_window_in_days = 7
 }
 
 resource "aws_kms_alias" "vpce" {
-  name          = "alias/testing-with-vpce"
+  name          = "alias/efs"
   target_key_id = aws_kms_key.vpce.key_id
 }
 
