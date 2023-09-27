@@ -1,4 +1,4 @@
-# aws-efs-datasync
+# AWS EFS Datasync
 
 AWS EFS migration using DataSync and KMS.
 
@@ -10,30 +10,33 @@ A few notes about EFS encryption:
 - **EFS encryption** - It is not possible to encrypt an existing EFS. You have to migrate the data to a new encrypted EFS.
 - **Encrypting metadata at rest** - Amazon EFS uses the AWS managed key for Amazon EFS, `aws/elasticfilesystem`, to encrypt and decrypt file system metadata (that is, file names, directory names, and directory contents).
 
+<img src=".assets/efs.png" width=550 />
 
-EFS infrequent access
+## Setup
+
+Create the infrastructure:
 
 ```sh
 terraform init
 terraform apply -auto-approve
 ```
 
-After the infrastructure is provisioned, [mount the NFS][1] for the unencrypted EFS:
+Both file shares will be [mounted][1] upon `user-data` execution. Example:
 
 ```sh
-# Make a directory ("efs-mount-point")
 mkdir ~/efs-mount-point
-
-# Make a directory ("efs-mount-point"). Replace "mount-target-DNS"
-sudo mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport mount-target-DNS:/   ~/efs-mount-point
+sudo mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport <<MOUNT-TARGET-DNS>>:/   ~/efs-mount-point
 ```
 
-You need to change permissions to add files:
+Now, you need to change permissions to add files:
 
 ```sh
+cd ~/efs-mount-point
 sudo chmod go+rw .
 ```
 
-https://docs.aws.amazon.com/efs/latest/ug/using-service-linked-roles.html
+## DataSync
+
+
 
 [1]: https://docs.aws.amazon.com/efs/latest/ug/wt1-test.html

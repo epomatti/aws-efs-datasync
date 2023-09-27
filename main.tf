@@ -16,13 +16,6 @@ module "vpc" {
   region = var.aws_region
 }
 
-module "ec2-instance" {
-  source = "./modules/ec2-instance"
-  vpc_id = module.vpc.vpc_id
-  az     = module.vpc.az1
-  subnet = module.vpc.subnet_pub1
-}
-
 module "efs_unencrypted" {
   source    = "./modules/efs/unencrypted"
   subnet_id = module.vpc.subnet_priv1
@@ -38,6 +31,22 @@ module "efs_encrypted_kms" {
   subnet_id  = module.vpc.subnet_priv1
   vpc_id     = module.vpc.vpc_id
   kms_key_id = module.kms.key_arn
+}
+
+module "ssm" {
+  source                   = "./modules/ssm"
+  efs_unencrypted_dns_name = module.efs_unencrypted.dns_name
+  efs_encrypted_dns_name   = module.efs_encrypted.dns_name
+}
+
+
+module "ec2-instance" {
+  source = "./modules/ec2-instance"
+  vpc_id = module.vpc.vpc_id
+  az     = module.vpc.az1
+  subnet = module.vpc.subnet_pub1
+
+  depends_on = [module.ssm]
 }
 
 module "datasync" {

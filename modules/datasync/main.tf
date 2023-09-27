@@ -22,3 +22,13 @@ resource "aws_datasync_location_efs" "encrypted" {
     subnet_arn          = var.subnet_arn
   }
 }
+
+resource "aws_datasync_task" "efs_encrypted" {
+  name                     = "efs-unencrypted-to-encrypted"
+  source_location_arn      = aws_datasync_location_efs.unencrypted.arn
+  destination_location_arn = aws_datasync_location_efs.encrypted.arn
+
+  options {
+    bytes_per_second = -1
+  }
+}
