@@ -13,3 +13,7 @@ output "subnet_pub1" {
 output "subnet_priv1" {
   value = aws_subnet.private1.id
 }
+
+output "subnet_priv1_arn" {
+  value = aws_subnet.private1.arn
+}
