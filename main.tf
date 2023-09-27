@@ -39,14 +39,18 @@ module "ssm" {
   efs_encrypted_dns_name   = module.efs_encrypted_kms.dns_name
 }
 
-
 module "ec2-instance" {
   source = "./modules/ec2-instance"
   vpc_id = module.vpc.vpc_id
   az     = module.vpc.az1
   subnet = module.vpc.subnet_pub1
 
-  depends_on = [module.ssm]
+  # Adding dependencies for SSM parameters
+  depends_on = [
+    module.ssm,
+    module.efs_unencrypted,
+    module.efs_encrypted_kms
+  ]
 }
 
 module "datasync" {
@@ -59,4 +63,9 @@ module "datasync" {
 
   efs_encrypted_arn    = module.efs_encrypted_kms.efs_arn
   efs_encrypted_sg_arn = module.efs_encrypted_kms.sg_arn
+
+  depends_on = [
+    module.efs_unencrypted,
+    module.efs_encrypted_kms
+  ]
 }
