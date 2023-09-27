@@ -23,4 +23,10 @@ mkdir ~/efs-mount-point
 sudo mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport mount-target-DNS:/   ~/efs-mount-point
 ```
 
+You need to change permissions to add files:
+
+```sh
+sudo chmod go+rw .
+```
+
 [1]: https://docs.aws.amazon.com/efs/latest/ug/wt1-test.html

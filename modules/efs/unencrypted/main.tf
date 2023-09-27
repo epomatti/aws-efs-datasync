@@ -1,8 +1,11 @@
+### EFS ###
+
 resource "aws_efs_file_system" "main" {
   creation_token   = "efs-unencrypted"
-  encrypted        = false
   performance_mode = "generalPurpose"
   throughput_mode  = "elastic"
+
+  encrypted = false
 }
 
 resource "aws_efs_mount_target" "vpc" {
