@@ -43,4 +43,10 @@ An AWS DataSync task will be created as part of the infrastructure. To trigger i
 aws datasync start-task-execution --task-arn <arn>
 ```
 
+https://docs.aws.amazon.com/efs/latest/ug/installing-amazon-efs-utils.html#installing-other-distro
+
+
+
+
+
 [1]: https://docs.aws.amazon.com/efs/latest/ug/wt1-test.html
