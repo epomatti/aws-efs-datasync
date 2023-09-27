@@ -36,7 +36,7 @@ module "efs_encrypted_kms" {
 module "ssm" {
   source                   = "./modules/ssm"
   efs_unencrypted_dns_name = module.efs_unencrypted.dns_name
-  efs_encrypted_dns_name   = module.efs_encrypted.dns_name
+  efs_encrypted_dns_name   = module.efs_encrypted_kms.dns_name
 }
 
 
