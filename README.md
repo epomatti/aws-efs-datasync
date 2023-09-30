@@ -10,7 +10,7 @@ A few notes about EFS encryption:
 - **EFS encryption** - It is not possible to encrypt an existing EFS. You have to migrate the data to a new encrypted EFS.
 - **Encrypting metadata at rest** - Amazon EFS uses the AWS managed key for Amazon EFS, `aws/elasticfilesystem`, to encrypt and decrypt file system metadata (that is, file names, directory names, and directory contents).
 
-<img src=".assets/efs.png" width=700 />
+<img src=".assets/efs.png" />
 
 ## Setup
 
