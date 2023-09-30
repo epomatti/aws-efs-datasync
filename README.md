@@ -35,14 +35,9 @@ cd ~/efs-mount-point
 sudo chmod go+rw .
 ```
 
-Create as many test files as needed.
+Create a test file like `test.txt` in the unencrypted mount.
 
-
-## Trigger DataSync
-
-An AWS DataSync task will be created as part of the infrastructure.
-
-Trigger the task from the CLI:
+A DataSync task is already created. Trigger it from the CLI:
 
 ```sh
 aws datasync start-task-execution --task-arn <arn>
@@ -51,3 +46,11 @@ aws datasync start-task-execution --task-arn <arn>
 Use the console to monitor the execution and check CloudWatch logs for troubleshooting.
 
 [1]: https://docs.aws.amazon.com/efs/latest/ug/wt1-test.html
+
+---
+
+### Clean-up
+
+```sh
+terraform destroy -auto-approve
+```
