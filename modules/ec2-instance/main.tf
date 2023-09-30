@@ -1,9 +1,9 @@
 locals {
-  affix = "filebox"
+  affix = "efs-client"
 }
 
 resource "aws_iam_instance_profile" "box" {
-  name = "filebox-intance-profile"
+  name = "efs-client-intance-profile"
   role = aws_iam_role.box.id
 }
 
