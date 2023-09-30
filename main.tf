@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.18.1"
+      version = "5.19.0"
     }
   }
 }
@@ -53,6 +53,10 @@ module "ec2-instance" {
   ]
 }
 
+module "cloudwatch" {
+  source = "./modules/cloudwatch"
+}
+
 module "datasync" {
   source = "./modules/datasync"
 
@@ -63,6 +67,8 @@ module "datasync" {
 
   efs_encrypted_arn    = module.efs_encrypted_kms.efs_arn
   efs_encrypted_sg_arn = module.efs_encrypted_kms.sg_arn
+
+  cloudwatch_log_group_arn = module.cloudwatch.log_group_arn
 
   depends_on = [
     module.efs_unencrypted,

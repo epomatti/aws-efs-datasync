@@ -17,3 +17,7 @@ variable "efs_encrypted_sg_arn" {
 variable "subnet_arn" {
   type = string
 }
+
+variable "cloudwatch_log_group_arn" {
+  type = string
+}

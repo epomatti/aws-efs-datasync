@@ -10,7 +10,7 @@ A few notes about EFS encryption:
 - **EFS encryption** - It is not possible to encrypt an existing EFS. You have to migrate the data to a new encrypted EFS.
 - **Encrypting metadata at rest** - Amazon EFS uses the AWS managed key for Amazon EFS, `aws/elasticfilesystem`, to encrypt and decrypt file system metadata (that is, file names, directory names, and directory contents).
 
-<img src=".assets/efs.png" width=550 />
+<img src=".assets/efs.png" width=700 />
 
 ## Setup
 
@@ -35,18 +35,16 @@ cd ~/efs-mount-point
 sudo chmod go+rw .
 ```
 
-## DataSync
+## Trigger DataSync
 
-An AWS DataSync task will be created as part of the infrastructure. To trigger it from the CLI:
+An AWS DataSync task will be created as part of the infrastructure.
+
+Trigger the task from the CLI:
 
 ```sh
 aws datasync start-task-execution --task-arn <arn>
 ```
 
-https://docs.aws.amazon.com/efs/latest/ug/installing-amazon-efs-utils.html#installing-other-distro
-
-
-
-
+Use the console to monitor the execution and check CloudWatch logs for troubleshooting.
 
 [1]: https://docs.aws.amazon.com/efs/latest/ug/wt1-test.html
