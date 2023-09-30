@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-su ubuntu
 
 export DEBIAN_FRONTEND=noninteractive
 export NEEDRESTART_MODE=a
@@ -18,8 +17,14 @@ sudo ./aws/install
 unencryptedDnsName=$(aws ssm get-parameter --name /efs/unencrypted/dnsname --query Parameter.Value --output text)
 encryptedDnsName=$(aws ssm get-parameter --name /efs/encrypted/dnsname --query Parameter.Value --output text)
 
-sudo mkdir ~/efs-mount-point
-sudo mkdir ~/efs-mount-point-encrypted
+unencryptedMount="/home/ubuntu/efs-mount-point"
+encryptedMount="/home/ubuntu/efs-mount-point-encrypted"
 
-sudo mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport $unencryptedDnsName:/   ~/efs-mount-point
-sudo mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport $encryptedDnsName:/   ~/efs-mount-point-encrypted
+sudo mkdir $unencryptedMount
+sudo mkdir $encryptedMount
+
+sudo mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport $unencryptedDnsName:/   $unencryptedMount
+sudo mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport $encryptedDnsName:/   $encryptedMount
+
+cd $unencryptedMount
+sudo chmod go+rw .
